@@ -1,0 +1,106 @@
+package rules
+
+import com.jeillysson.ufal.sistemaespecialista.model.Localizacao
+
+rule "Bloco A para Bloco A" 
+	when 
+		ObjetoLoc: Localizacao(saida == 4, destino == 4)
+	then
+		String mensagem = "<strong>Parabe&#769ns</strong> Voce&#770 Chegou ao Seu Destino!";
+		ObjetoLoc.setOrientacao(mensagem);
+end
+
+rule "Bloco A para Auditorio"
+	when
+		ObjetoLoc: Localizacao(saida == 4, destino == 3)
+	then
+		String local = ObjetoLoc.pegarLocal(ObjetoLoc.getDestino() - 1);
+		int temp = ObjetoLoc.getTemp();
+		if (temp == 2){
+			String mensagem = "Destino - <strong>"+local+"</strong><br>Voce&#770 chegou ao Bloco A<br>"+
+			"1 - Siga pelo caminho da direita, passe por uma grande a&#769rea de convive&#770ncia<br>"+
+			"2 - Depois dobre a esquerda<br>"+
+			"3 - Siga ate&#769 o final do corredor<br>"+
+			"4 - O Audito&#769rio tem portas duplas!, voce&#770 encontrou as portas duplas?";
+			ObjetoLoc.setSaida(ObjetoLoc.getSaida() - 1);
+			ObjetoLoc.setOrientacao(mensagem);	
+		} else if (temp == 3){
+			String mensagem = "Destino - <strong>"+local+"</strong><br>Voce&#770 chegou ao Bloco A<br>"+
+			"1 - Siga em frente, passe por uma grande a&#769rea de convive&#770ncia<br>"+
+			"2 - Depois dobre a esquerda<br>"+
+			"3 - Siga ate&#769 o final do corredor<br>"+
+			"4 - O Audito&#769rio tem portas duplas!, voce&#770 encontrou as portas duplas?";
+			ObjetoLoc.setSaida(ObjetoLoc.getSaida() - 1);
+			ObjetoLoc.setOrientacao(mensagem);	
+		}		
+end
+
+rule "Bloco A para Caminho da Esquerda"
+	when
+		ObjetoLoc: Localizacao(saida == 4, destino == 2 || destino == 1)
+	then
+		String local = ObjetoLoc.pegarLocal(ObjetoLoc.getDestino() - 1);
+		int temp = ObjetoLoc.getTemp();
+		if (temp == 2){
+				String mensagem = "Destino - <strong>"+local+"</strong><br>Voce&#770 chegou ao Bloco A<br>"+
+				"1 - Siga pelo caminho da direita, passe por uma grande a&#769rea de convive&#770ncia ate&#769 o pro&#769ximo bloco<br>"+
+				"2 - O pro&#769ximo bloco e&#769 o Bloco das Coordenaco&#771es<br>"+
+				"3 - Voce&#770 Chegou ao Bloco das Coordenaco&#771es?";
+				ObjetoLoc.setSaida(ObjetoLoc.getSaida() - 2);
+				ObjetoLoc.setOrientacao(mensagem);
+		} else if (temp == 3){
+				String mensagem = "Destino - <strong>"+local+"</strong><br>Voce&#770 chegou ao Bloco A<br>"+
+				"1 - Siga em frente, passe por uma grande a&#769rea de convive&#770ncia ate&#769 pro&#769ximo bloco<br>"+
+				"2 - O pro&#769ximo bloco e&#769 o Bloco das Coordenaco&#771es<br>"+
+				"3 - Voce&#770 Chegou ao Bloco das Coordenaco&#771es?";
+				ObjetoLoc.setSaida(ObjetoLoc.getSaida() - 2);
+				ObjetoLoc.setOrientacao(mensagem);
+		}		
+end
+
+
+rule "Bloco A para Caminho da Direita"
+	when
+		ObjetoLoc: Localizacao(saida == 4, destino == 6 || destino == 7 || destino == 8 || destino == 9 || destino == 10)
+	then
+		String local = ObjetoLoc.pegarLocal(ObjetoLoc.getDestino() - 1);
+		int temp = ObjetoLoc.getTemp();
+		if (temp == 2){
+			String mensagem = "Destino - <strong>"+local+"</strong><br>Voce&#770 chegou ao Bloco A<br>"+
+			"1 - Siga pelo caminho da esquerda, ate&#769 o pro&#769ximo bloco<br>"+
+			"2 - O pro&#769ximo bloco e&#769 o Bloco B<br>"+
+			"3 - Voce&#770 Chegou ao Bloco B?";
+			ObjetoLoc.setSaida(ObjetoLoc.getSaida() + 2);
+			ObjetoLoc.setOrientacao(mensagem);	
+		} else if (temp == 1){
+			String mensagem = "Destino - <strong>"+local+"</strong><br>Voce&#770 chegou ao Bloco A<br>"+
+			"1 - Siga em frente, ate&#769 o pro&#769ximo Bloco<br>"+
+			"2 - O pro&#769ximo bloco e&#769 o B<br>"+
+			"3 - Voce&#770 Chegou ao Bloco B?";
+			ObjetoLoc.setSaida(ObjetoLoc.getSaida() + 2);
+			ObjetoLoc.setOrientacao(mensagem);	
+		}		
+end
+
+rule "Bloco A para Biblioteca"
+	when
+		ObjetoLoc: Localizacao(saida == 4, destino == 5)
+	then
+		String local = ObjetoLoc.pegarLocal(ObjetoLoc.getDestino() - 1);
+		int temp = ObjetoLoc.getTemp();
+		if (temp == 3){
+			String mensagem = "Destino - <strong>"+local+"</strong><br>Voce&#770 chegou ao Bloco A<br>"+
+			"1 - Dobra a Direita e siga ate&#769 o final do corredor<br>"+
+			"2 - A Biblioteca fica no final do corredor<br>"+
+			"3 - Voce&#770 Chegou No final do corredor?";
+			ObjetoLoc.setSaida(ObjetoLoc.getSaida() + 2);
+			ObjetoLoc.setOrientacao(mensagem);	
+		} else if (temp == 1){
+			String mensagem = "Destino - <strong>"+local+"</strong><br>Voce&#770 chegou ao Bloco A<br>"+
+			"1 - Dobra a Esquerda e siga ate&#769 o final do corredor<br>"+
+			"2 - A Biblioteca fica no final do corredor<br>"+
+			"3 - Voce&#770 Chegou No final do corredor?";
+			ObjetoLoc.setSaida(ObjetoLoc.getSaida() + 1);
+			ObjetoLoc.setOrientacao(mensagem);	
+		}		
+end

@@ -1,0 +1,51 @@
+package rules
+
+import com.jeillysson.ufal.sistemaespecialista.model.Localizacao
+
+rule "Bloco de Coordenações para Guarita/saida da Universidade" 
+	when 
+		ObjetoLoc: Localizacao(saida == 2, destino == 1)
+	then
+		String mensagem = "1- Para <strong>SAIR DA UNIVERSIDADE</strong>, passe pelo estacionamento em frente ao bloco";
+		ObjetoLoc.setSaida(ObjetoLoc.getSaida()-1);
+		ObjetoLoc.setOrientacao(mensagem); 
+end
+
+rule "Bloco de Coordenações para Bloco de Coordenações"
+	when
+		ObjetoLoc: Localizacao(saida == 2, destino == 2)
+	then
+		String mensagem = "<strong>Parabe&#769ns</strong> Voce&#770 Chegou ao Seu Destino!";
+		ObjetoLoc.setOrientacao(mensagem);
+end
+
+rule "Bloco de Coordenações para Auditorio" 
+	when
+		ObjetoLoc: Localizacao(saida == 2, destino == 3) 
+	then 
+		String local = ObjetoLoc.pegarLocal(ObjetoLoc.getDestino() - 1);
+		String mensagem = "Destino <strong>"+local+"<br>1</strong>- Siga pelo caminho da esquerda<br><br>"+
+			"<strong>2</strong> - Depois <strong>DOBRE A DIREITA</strong>, na primeira entrada que encontrar<br><br>"+
+			"<strong>3</strong> - Siga em frente ate&#769 o final do corredor<br><br>"+
+			"<strong>4</strong> - A entrada do AUDITO&#769RIO tem portas duplas<br><br>"+
+			"<em>Voce&#770 encontrou as portas Duplas?</em>";
+		ObjetoLoc.setSaida(ObjetoLoc.getSaida()+1);
+		ObjetoLoc.setOrientacao(mensagem);
+end 
+
+rule "Bloco de Coordenação para Outros Locais"
+	when
+		ObjetoLoc: Localizacao(saida == 2, destino == 4 || destino == 5 || 
+		destino == 6 || destino == 7 || destino == 8 || destino == 9 || destino == 10)
+	then
+		String local = ObjetoLoc.pegarLocal(ObjetoLoc.getDestino() - 1);
+		int saida = ObjetoLoc.getSaida()+1;
+		ObjetoLoc.setTemp(1);
+		String mensagem = "Destino <strong>"+local+"<br>1</strong> - Siga pelo caminho da esquerda<br><br>"+
+		"<strong>2</strong> - Passe por uma grande a&#769rea de convive&#770ncia<br><br>"+
+		"<strong>3</strong> - O primeiro corredor de Salas de Aulas e&#769 o Bloco A<br><br>"+
+		"<em>Voce&#770 encontrou o Bloco A?</em>";
+		ObjetoLoc.setSaida(ObjetoLoc.getSaida()+2);
+		ObjetoLoc.setOrientacao(mensagem);	
+end
+

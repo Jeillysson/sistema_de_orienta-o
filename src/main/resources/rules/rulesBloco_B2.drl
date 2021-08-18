@@ -1,0 +1,60 @@
+package rules
+
+import com.jeillysson.ufal.sistemaespecialista.model.Localizacao
+
+rule "Bloco B2 para B2"
+	when
+		ObjetoLoc: Localizacao(saida == 8, destino == 8)
+	then
+		String local = ObjetoLoc.pegarLocal(ObjetoLoc.getDestino() - 1);
+		String mensagem = "Destino - <strong>"+local+ "<br>1</strong> - Dobre a direita<br><br>"+
+		"2 - Parabe&#769ns</strong> Voce&#770 Chegou ao Seu Destino!";
+		ObjetoLoc.setOrientacao(mensagem);
+end
+
+rule "Bloco B2 para C"
+	when
+		ObjetoLoc: Localizacao(saida == 8, destino == 9)
+	then
+		String local = ObjetoLoc.pegarLocal(ObjetoLoc.getDestino() - 1);
+		String mensagem = "Destino - <strong>"+local+ "<br>1</strong> - Dobre a esquerda<br><br>"+
+		"2 - Parabe&#769ns</strong> Voce&#770 Chegou ao Seu Destino!";
+		ObjetoLoc.setSaida(ObjetoLoc.getSaida()+1);
+		ObjetoLoc.setOrientacao(mensagem);
+end
+
+rule "Bloco C para C"
+	when
+		ObjetoLoc: Localizacao(saida == 9, destino == 9)
+	then
+		String local = ObjetoLoc.pegarLocal(ObjetoLoc.getDestino() - 1);
+		String mensagem = "Parabe&#769ns</strong> Voce&#770 Chegou ao Seu Destino!";
+		ObjetoLoc.setOrientacao(mensagem);
+end
+
+rule "Bloco B2 para LECC1"
+	when
+		ObjetoLoc: Localizacao(saida == 8, destino == 10)
+	then
+		String local = ObjetoLoc.pegarLocal(ObjetoLoc.getDestino() - 1);
+		String mensagem = "Destino - <strong>"+local+ "<br>1</strong> - Suba as Escadas<br><br>"+
+		"2 - Parabe&#769ns</strong> Voce&#770 Chegou ao Seu Destino!";
+		ObjetoLoc.setSaida(ObjetoLoc.getSaida()+2);
+		ObjetoLoc.setOrientacao(mensagem);
+end
+
+rule "Bloco LECC1 para LECC1"
+	when
+		ObjetoLoc: Localizacao(saida == 10, destino == 10)
+	then
+		String local = ObjetoLoc.pegarLocal(ObjetoLoc.getDestino() - 1);
+		String mensagem = "Parabe&#769ns</strong> Voce&#770 Chegou ao Seu Destino!";
+		ObjetoLoc.setOrientacao(mensagem);
+end
+
+
+rule "Bloco B2 para B"
+	when
+	
+	then
+end

@@ -1,0 +1,26 @@
+package rules
+
+import com.jeillysson.ufal.sistemaespecialista.model.Localizacao
+
+rule "Biblioteca para Biblioteca"
+	when
+		ObjetoLoc: Localizacao(saida == 5, destino == 5)
+	then
+		String mensagem = "<strong>Parabe&#769ns</strong> Voce&#770 Chegou ao Seu Destino!";
+		ObjetoLoc.setOrientacao(mensagem); 
+end
+
+rule "Biblioteca para Bloco A"
+	when
+		ObjetoLoc: Localizacao(saida == 5, destino == 1 || destino == 2 || destino == 3 || destino == 4 
+		|| destino == 6 || destino == 7 || destino == 8 || destino == 9 || destino == 10)
+	then
+		String local = ObjetoLoc.pegarLocal(ObjetoLoc.getDestino() - 1);
+		int saida = ObjetoLoc.getSaida()+1;
+		ObjetoLoc.setTemp(2);
+		String mensagem = "Destino <strong>"+local+"<br>1</strong> - Siga em frente ate o Bloco A<br><br>"+
+		"<strong>2</strong> - O primeiro corredor de Salas de Aulas e&#769 o Bloco A<br><br>"+
+		"<em>Voce&#770 encontrou o Bloco A?</em>";
+		ObjetoLoc.setSaida(ObjetoLoc.getSaida()-1);
+		ObjetoLoc.setOrientacao(mensagem);	
+end

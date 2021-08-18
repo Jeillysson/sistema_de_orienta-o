@@ -1,0 +1,47 @@
+package rules
+
+import com.jeillysson.ufal.sistemaespecialista.model.Localizacao
+
+rule "Bloco B para Bloco B"
+	when
+		ObjetoLoc: Localizacao(saida == 7, destino == 7)
+	then
+		String mensagem = "<strong>Parabe&#769ns</strong> Voce&#770 Chegou ao Seu Destino!";
+		ObjetoLoc.setOrientacao(mensagem);
+end
+
+rule "Bloco B para Bloco B2"
+	when
+		ObjetoLoc: Localizacao(saida == 7, destino == 8 || destino == 9 || destino == 10)
+	then
+		String local = ObjetoLoc.pegarLocal(ObjetoLoc.getDestino() - 1);
+		String mensagem = "Destino - <strong>"+local+"<br>1</strong> - Voce&#770 esta&#769 no <strong>Bloco B</strong><br><br>"+
+		"<strong>2</strong> - Para chegar ao seu destino, siga pelo corredor do Bloco B ate&#769 o fim do corredor<br><br>"+
+		"<strong>3</strong> - Desca as escadas e va&#769 ate&#769 o pro&#769ximo bloco, localizado em frente<br><br>"+
+		"<strong>4</strong> - Conseguiu chegar ao pro&#769ximo bloco?";
+		ObjetoLoc.setSaida(ObjetoLoc.getSaida()+1);
+		ObjetoLoc.setOrientacao(mensagem);
+end
+
+rule "Bloco B para NAE"
+	when
+		ObjetoLoc: Localizacao(saida == 7, destino == 6)
+	then
+		String mensagem = "<strong>1</strong> - Para chegar no <strong>NAE</strong>, Siga para a entrada do Bloco B<br><br>"+
+		"<strong>2</strong> - A porta da Sala contem o nome NAE"+
+		"<strong>3</strong> - Conseguiu encontrar o NAE?";
+		ObjetoLoc.setOrientacao(mensagem);
+end
+
+rule "Bloco B para Bloco A e anteriores"
+	when
+		ObjetoLoc: Localizacao(saida == 7, destino == 5 || destino == 4 || destino == 3 || destino == 2 || destino == 1)
+	then
+		String local = ObjetoLoc.pegarLocal(ObjetoLoc.getDestino() - 1);
+		String mensagem = "Destino - <strong>"+local+"<br>1</strong> - Siga em direca&#771o a entrada do Bloco B<br><br>"+
+		"<strong>2</strong> - O NAE fica na entrada do Bloco B<br>"+
+		"<strong>3</strong> - Voce&#770 conseguiu encontrar o NAE?";
+		ObjetoLoc.setSaida(ObjetoLoc.getSaida()-1);
+		ObjetoLoc.setOrientacao(mensagem);
+end
+
